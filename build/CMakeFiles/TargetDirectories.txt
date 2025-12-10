@@ -1,0 +1,3 @@
+/home/pi/yolo_cpp/build/CMakeFiles/yolo_cam.dir
+/home/pi/yolo_cpp/build/CMakeFiles/edit_cache.dir
+/home/pi/yolo_cpp/build/CMakeFiles/rebuild_cache.dir
