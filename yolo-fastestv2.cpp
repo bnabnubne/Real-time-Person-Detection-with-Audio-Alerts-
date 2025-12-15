@@ -4,10 +4,8 @@
 #include <cmath>
 #include <cstdio>
 #include <cassert>
-
-// ---------------------
-//  Constructor
-// ---------------------
+ 
+//  Constructor 
 yoloFastestv2::yoloFastestv2()
 {
     numOutput   = 2;
@@ -17,8 +15,7 @@ yoloFastestv2::yoloFastestv2()
     nmsThresh   = 0.25f;
     inputWidth  = 352;
     inputHeight = 352;
-
-    // anchors giống file gốc
+ 
     std::vector<float> bias{
         12.64f, 19.39f,
         37.88f, 51.48f,
@@ -33,10 +30,9 @@ yoloFastestv2::yoloFastestv2()
 yoloFastestv2::~yoloFastestv2()
 {
 }
-
-// ---------------------
+ 
 //  init() – set NCNN option
-// ---------------------
+
 int yoloFastestv2::init(bool use_vulkan_compute)
 {
     ncnn::Option& opt = net.opt;
@@ -55,10 +51,9 @@ int yoloFastestv2::init(bool use_vulkan_compute)
 
     return 0;
 }
-
-// ---------------------
+ 
 //  load model
-// ---------------------
+
 int yoloFastestv2::loadModel(const char* paramPath, const char* binPath)
 {
     if (net.load_param(paramPath) != 0)
@@ -75,10 +70,8 @@ int yoloFastestv2::loadModel(const char* paramPath, const char* binPath)
     std::printf("NCNN model init success...\n");
     return 0;
 }
-
-// ---------------------
-//  IoU helper
-// ---------------------
+ 
+//  IoU helper 
 static float intersection_area(const TargetBox& a, const TargetBox& b)
 {
     if (a.x1 > b.x2 || a.x2 < b.x1 || a.y1 > b.y2 || a.y2 < b.y1)
@@ -94,10 +87,8 @@ static bool scoreSort(const TargetBox& a, const TargetBox& b)
 {
     return (a.score > b.score);
 }
-
-// ---------------------
-//  NMS
-// ---------------------
+ 
+//  NMS 
 int yoloFastestv2::nmsHandle(std::vector<TargetBox>& tmpBoxes,
                              std::vector<TargetBox>& dstBoxes)
 {
@@ -137,10 +128,8 @@ int yoloFastestv2::nmsHandle(std::vector<TargetBox>& tmpBoxes,
 
     return 0;
 }
-
-// ---------------------
-//  getCategory()
-// ---------------------
+ 
+//  getCategory() 
 int yoloFastestv2::getCategory(const float* values, int index,
                                int& category, float& score)
 {
@@ -162,10 +151,9 @@ int yoloFastestv2::getCategory(const float* values, int index,
     }
     return 0;
 }
+ 
+//  post-process feature maps 
 
-// ---------------------
-//  post-process feature maps
-// ---------------------
 int yoloFastestv2::predHandle(const ncnn::Mat* out,
                               std::vector<TargetBox>& dstBoxes,
                               float scaleW, float scaleH,
@@ -224,10 +212,8 @@ int yoloFastestv2::predHandle(const ncnn::Mat* out,
 
     return nmsHandle(tmpBoxes, dstBoxes);
 }
-
-// ---------------------
-//  detection()
-// ---------------------
+ 
+//  detection() 
 int yoloFastestv2::detection(const cv::Mat& srcImg,
                              std::vector<TargetBox>& dstBoxes,
                              float thresh)
@@ -251,8 +237,7 @@ int yoloFastestv2::detection(const cv::Mat& srcImg,
     const float norm_vals[3] = {1.f / 255.f, 1.f / 255.f, 1.f / 255.f};
     inputImg.substract_mean_normalize(mean_vals, norm_vals);
 
-    ncnn::Extractor ex = net.create_extractor();
-    // trong bản ncnn hiện tại, số thread lấy từ net.opt.num_threads
+    ncnn::Extractor ex = net.create_extractor(); 
 
     ex.input("input.1", inputImg);
 

@@ -1,0 +1,6 @@
+Simulation/
+README.md
+build/
+*.o
+*.csv
+perf_log.csv

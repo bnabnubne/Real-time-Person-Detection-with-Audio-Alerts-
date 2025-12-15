@@ -20,8 +20,7 @@ long long AudioPlayer::now_ms() const
 }
 
 void AudioPlayer::play_blocking()
-{
-    // dùng aplay như bên Python
+{ 
     std::string cmd = "aplay -q \"" + file + "\"";
     std::system(cmd.c_str());
 }

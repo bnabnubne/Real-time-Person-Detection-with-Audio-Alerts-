@@ -5,37 +5,46 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE Release)
-add_compile_options(-O3 -DNDEBUG -march=armv8-a+simd)
-# OpenCV
+
+add_compile_options(
+  -O3
+  -DNDEBUG
+  -march=native
+  -ffast-math
+)
+
 find_package(OpenCV REQUIRED)
 
-# ncnn
 set(CMAKE_PREFIX_PATH "/home/pi/ncnn/build/install" ${CMAKE_PREFIX_PATH})
 find_package(ncnn REQUIRED)
 
-# OpenMP (ncnn dùng)
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
-    message(STATUS "OpenMP found")
+  message(STATUS "OpenMP found")
 endif()
 
+find_package(Threads REQUIRED)
+
 add_executable(yolo_cam
-    main.cpp
-    yolo-fastestv2.cpp
-    audio_player.cpp
+  main.cpp
+  yolo-fastestv2.cpp
+  audio_player.cpp
 )
 
 target_include_directories(yolo_cam PRIVATE
-    ${OpenCV_INCLUDE_DIRS}
-    ${NCNN_INCLUDE_DIRS}
-    /home/pi/ncnn/build/install/include
+  ${OpenCV_INCLUDE_DIRS}
+  /home/pi/ncnn/build/install/include
+  ${CMAKE_SOURCE_DIR}
+  ${CMAKE_SOURCE_DIR}/third_party
+  
 )
 
 target_link_libraries(yolo_cam PRIVATE
-    ${OpenCV_LIBS}
-    ncnn
+  ${OpenCV_LIBS}
+  ncnn
+  Threads::Threads
 )
 
 if(OpenMP_CXX_FOUND)
-    target_link_libraries(yolo_cam PRIVATE OpenMP::OpenMP_CXX)
+  target_link_libraries(yolo_cam PRIVATE OpenMP::OpenMP_CXX)
 endif()

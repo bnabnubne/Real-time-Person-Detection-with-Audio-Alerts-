@@ -5,9 +5,6 @@
 #include <opencv2/opencv.hpp>
 #include <net.h>   // từ ncnn
 
-// ---------------------
-//  TargetBox
-// ---------------------
 class TargetBox
 {
 private:
@@ -24,10 +21,9 @@ public:
 
     float area() const { return getWidth() * getHeight(); }
 };
+ 
+//  yoloFastestv2 
 
-// ---------------------
-//  yoloFastestv2
-// ---------------------
 class yoloFastestv2
 {
 private:
@@ -62,4 +58,4 @@ public:
                   float thresh = 0.3f);
 };
 
-#endif // YOLO_FASTESTV2_H
+#endif  
