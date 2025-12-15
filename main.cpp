@@ -45,7 +45,7 @@ struct FramePacket {
     cv::Mat frame;  
     uint64_t id = 0;
     
-
+}
 struct DetPacket {
     uint64_t frame_id = 0;
     std::vector<TargetBox> boxes;
