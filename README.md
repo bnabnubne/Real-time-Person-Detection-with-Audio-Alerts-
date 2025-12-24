@@ -28,27 +28,6 @@ When a person is detected, the system triggers an **audio alert** and sends dete
 
 ---
 
-## REPOSITORY STRUCTURE (TYPICAL)
-
-```text
-.
-├── CMakeLists.txt
-├── main.cpp
-├── yolo-fastestv2.h
-├── yolo-fastestv2.cpp
-├── audio_player.hpp
-├── audio_player.cpp
-├── PerfLogger.hpp
-├── third_party/
-│   └── httplib.h
-├── models/
-│   ├── yolo-fastestv2-opt.param
-│   └── yolo-fastestv2-opt.bin
-├── ws_bridge.py
-├── ui.py
-└── build/
-```
-
 ## Software Requirements
 
 ### On Raspberry Pi
@@ -118,7 +97,7 @@ pip install flask websocket-client numpy
 ```bash
 pip install flask websocket-client opencv-python matplotlib numpy
 ``` 
-
+---
 ## Build Instructions (Raspberry Pi)
 
 ```bash
@@ -163,7 +142,7 @@ The UI will be available at:
 [http://localhost:8080](http://localhost:8080/)
 
 > The UI connects to the Raspberry Pi using its local IP address. Make sure the IP address in `ui.py` matches your Raspberry Pi IP.
-
+---
 ## Notes  
 
 By default, the system runs **NCNN inference on CPU** (`kUseVulkan = false`), because during testing, CPU execution provided **more stable and higher FPS** on our setup.
