@@ -397,7 +397,7 @@ html = f"""
     svg.style.left   = left + "px";
     svg.style.top    = top  + "px";
 
-    svg.setAttribute("viewBox", "0 0 352 352");
+    svg.setAttribute("viewBox", "0 0 640 480");
     return true;
     }}
   function clearOverlay() {{
